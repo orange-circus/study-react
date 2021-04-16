@@ -1,15 +1,39 @@
-import React from "react";
+/* eslint react-hooks/exhaustive-deps:off */
+import React, { useEffect, useState } from "react";
 import ColorfulMessage from "./components/ColorfulMessage";
 
 const App = () => {
-  const onClickButton = () => alert();
+  console.log("さいしょ");
+  const [num, setNum] = useState(0);
+  const [faceShowFlag, setFaceShowFlag] = useState(false);
+
+  const onClickCountUp = () => {
+    setNum(num + 1);
+  };
+  const onClickSwitchShowFlag = () => {
+    setFaceShowFlag(!faceShowFlag);
+  };
+
+  useEffect(() => {
+    if (num > 0) {
+      if (num % 3 === 0) {
+        faceShowFlag || setFaceShowFlag(true);
+      } else {
+        faceShowFlag && setFaceShowFlag(false);
+      }
+    }
+  }, [num]);
 
   return (
     <>
       <h1 style={{ color: "gray" }}>おはようございます！</h1>
       <ColorfulMessage color="pink">小松奈々です！</ColorfulMessage>
       <ColorfulMessage color="blue">神木隆之介です！</ColorfulMessage>
-      <button onClick={onClickButton}>ボタン</button>
+      <button onClick={onClickCountUp}>カウントアップ</button>
+      <br />
+      <button onClick={onClickSwitchShowFlag}>on/off</button>
+      <p>{num}</p>
+      {faceShowFlag && <p>( ﾟДﾟ)</p>}
     </>
   );
 };
